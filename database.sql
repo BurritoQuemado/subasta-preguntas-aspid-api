@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    balance BIGINT NOT NULL default 1500,
+    balance BIGINT NOT NULL default 150000,
     quiz_try BOOLEAN default true,
     updated_at TIMESTAMP,
     created_at TIMESTAMP
