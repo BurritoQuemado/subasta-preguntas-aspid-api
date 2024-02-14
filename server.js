@@ -25,13 +25,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/signin', (req, res) => {
+    const { email, password } = req.body;
     db.select('email' , 'hash').from('login')
-    .where('email','=',req.body.email)
+    .where('email','=',email)
     .then(data => {
-        const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
+        const isValid = bcrypt.compareSync(password, data[0].hash);
         if (isValid) {
             return db.select('id').from('users')
-            .where('email', '=', req.body.email)
+            .where('email', '=', email)
             .then(user => {
                 res.header("Access-Control-Allow-Origin", "*");
                 res.json(user[0]);
@@ -45,7 +46,7 @@ app.post('/signin', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    const { name, lname, email, password } = req.body;
+    const { name, lname, email, password, work_place, charge, phone } = req.body;
     const hash = bcrypt.hashSync(password, 18);
     const timestamp = new Date();
 
@@ -63,11 +64,17 @@ app.post('/register', (req, res) => {
                 email: loginEmail[0].email,
                 name: name,
                 lastname: lname,
+                work_place: work_place,
+                phone: phone,
+                charge: charge,
                 created_at: timestamp,
-                updated_at: timestamp
+                updated_at: timestamp   
             })
             .then(user => {
-                res.json(user[0]);
+                res.json({
+                    user: user[0],
+                    message: "Successfully registered"
+                });
             })
         })
         .then(trx.commit)
@@ -105,6 +112,9 @@ app.get('/getUserData/:id', (req, res) => {
         .then(user => {
             res.json({
                 name: user[0].name + ' ' + user[0].lastname,
+                work_place: user[0].work_place,
+                charge: user[0].charge,
+                phone: user[0].phone,
                 balance: user[0].balance
             });
         })
@@ -180,7 +190,7 @@ app.post('/answerQuiz', (req, res) => {
 
 
 app.get('/getUsersInfo', (req, res) => {
-    db.select('name','lastname','balance','email','id','quiz_try')
+    db.select('name','lastname','balance','email','id','quiz_try', 'work_place','charge','phone')
     .from('users')
     .then(users => {
         return res.json(users);
