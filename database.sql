@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS auctions_palacio;
+CREATE DATABASE IF NOT EXISTS auctions_aspid;
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS login (
     hash VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS inscriptions (
+CREATE TABLE IF NOT EXISTS registrations (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     fathers_name VARCHAR(255) NOT NULL,
@@ -39,5 +39,8 @@ CREATE TABLE IF NOT EXISTS inscriptions (
     email VARCHAR(255) NOT NULL,
     telephone VARCHAR(15) NOT NULL,
     fax VARCHAR(20) NOT NULL,
-    mobile VARCHAR(15) NOT NULL
+    mobile VARCHAR(15) NOT NULL,
+    other_topics VARCHAR(255) NOT NULL,
+    found_about VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL
 );
