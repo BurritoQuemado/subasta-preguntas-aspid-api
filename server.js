@@ -8,10 +8,10 @@ require('dotenv').config();
 const db = knex({
     client: 'pg',
     connection: {
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
+        connectionString: "postgres://postgres:admin1@localhost:5432/auctions_aspid",
+        /*ssl: {
             rejectUnauthorized: false
-        }
+        }*/
     }
 })
 
@@ -217,6 +217,58 @@ app.get('/getUsersQuizTry/:user_id', (req, res) => {
         });
 
     }
+})
+
+app.post('/newRegistration', (req, res) => {
+    const { name, fathers_name, mothers_name, charge, department, company, company_field, street, suburb, state, district, postal_code, country, website, email, telephone, fax, mobile, other_topics, found_about, direct_email, magazine, web, mailing, press, other } = req.body;
+    const timestamp = new Date();
+
+    const other_topics_value = other_topics ? other_topics : 'Sin recomendaciones';
+
+    db.transaction(trx => {
+        trx.insert({
+            name: name,
+            fathers_name: fathers_name,
+            mothers_name: mothers_name,
+            charge: charge,
+            department: department,
+            company: company,
+            company_field: company_field,
+            street: street,
+            suburb: suburb,
+            state: state,
+            district: district,
+            postal_code: postal_code,
+            country: country,
+            website: website,
+            telephone: telephone,
+            fax: fax,
+            mobile: mobile,
+            email: email,
+            other_topics: other_topics_value,
+            direct_email: direct_email,
+            magazine: magazine,
+            web: web,
+            mailing: mailing,
+            press: press,
+            other: other,
+            created_at: timestamp
+        })
+      .into('registrations')
+      .returning("*")
+      .then(register => {
+        res.status(200).json({
+            data: register[0],
+            msg: "registro exitoso"
+        })
+      })
+      .then(trx.commit)
+      .catch(trx.rollback)
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err)
+    })
 })
 
 

@@ -41,6 +41,11 @@ CREATE TABLE IF NOT EXISTS registrations (
     fax VARCHAR(20) NOT NULL,
     mobile VARCHAR(15) NOT NULL,
     other_topics VARCHAR(255) NOT NULL,
-    found_about VARCHAR(255) NOT NULL,
+    direct_email BOOLEAN DEFAULT false,
+    magazine BOOLEAN DEFAULT false,
+    web BOOLEAN DEFAULT false,
+    mailing BOOLEAN DEFAULT false,
+    press BOOLEAN DEFAULT false,
+    other BOOLEAN DEFAULT false,
     created_at TIMESTAMP NOT NULL
 );
