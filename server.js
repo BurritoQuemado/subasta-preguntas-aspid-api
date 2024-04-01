@@ -8,7 +8,7 @@ require('dotenv').config();
 const db = knex({
     client: 'pg',
     connection: {
-        connectionString: "postgres://postgres:admin1@localhost:5432/auctions_aspid",
+        connectionString: "postgres://localhost:5432/auction_aspid",
         /*ssl: {
             rejectUnauthorized: false
         }*/
@@ -196,6 +196,14 @@ app.get('/getUsersInfo', (req, res) => {
         return res.json(users);
     });
 })
+
+app.get('/getRegistrations', (req, res) => {
+    db.select('*')
+    .from('registrations')
+    .then(registrations => {
+        return res.json(registrations); 
+    });
+});
 
 app.get('/getUsersQuizTry/:user_id', (req, res) => {
     const { user_id } = req.params;
