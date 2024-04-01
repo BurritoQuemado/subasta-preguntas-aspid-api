@@ -197,6 +197,14 @@ app.get('/getUsersInfo', (req, res) => {
     });
 })
 
+app.get('/getRegistrations', (req, res) => {
+    db.select('*')
+    .from('registrations')
+    .then(registrations => {
+        return res.json(registrations); 
+    });
+});
+
 app.get('/getUsersQuizTry/:user_id', (req, res) => {
     const { user_id } = req.params;
 
