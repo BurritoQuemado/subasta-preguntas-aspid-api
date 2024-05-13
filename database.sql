@@ -46,6 +46,8 @@ CREATE TABLE IF NOT EXISTS registrations (
     web BOOLEAN DEFAULT false,
     mailing BOOLEAN DEFAULT false,
     press BOOLEAN DEFAULT false,
+    press_text VARCHAR(255),
     other BOOLEAN DEFAULT false,
+    other_text VARCHAR(255),
     created_at TIMESTAMP NOT NULL
 );

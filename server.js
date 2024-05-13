@@ -228,7 +228,7 @@ app.get('/getUsersQuizTry/:user_id', (req, res) => {
 })
 
 app.post('/newRegistration', (req, res) => {
-    const { name, fathers_name, mothers_name, charge, department, company, company_field, street, suburb, state, district, postal_code, country, website, email, telephone, fax, mobile, other_topics, found_about, direct_email, magazine, web, mailing, press, other } = req.body;
+    const { name, fathers_name, mothers_name, charge, department, company, company_field, street, suburb, state, district, postal_code, country, website, email, telephone, fax, mobile, other_topics, direct_email, magazine, web, mailing, press, press_text, other, other_text } = req.body;
     const timestamp = new Date();
 
     const other_topics_value = other_topics ? other_topics : 'Sin recomendaciones';
@@ -259,7 +259,9 @@ app.post('/newRegistration', (req, res) => {
             web: web,
             mailing: mailing,
             press: press,
+            press_text, press_text,
             other: other,
+            other_text: other_text,
             created_at: timestamp
         })
       .into('registrations')
